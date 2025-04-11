@@ -1,0 +1,8 @@
+### Send POST request with json body
+POST http://localhost:3000/api/wishlist
+Content-Type: application/json
+
+{
+  "name": "My Wishlist"
+}
+###
