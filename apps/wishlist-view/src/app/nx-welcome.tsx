@@ -580,7 +580,7 @@ export function NxWelcome({ title }: { title: string }) {
                   </svg>
                 </a>
                 <a
-                  href="https://nx.dev/recipes/react/remix#remix-with-nx"
+                  href="https://nx.dev/react-tutorial/1-code-generation?utm_source=nx-project"
                   target="_blank"
                   rel="noreferrer"
                   className="list-item-link"
