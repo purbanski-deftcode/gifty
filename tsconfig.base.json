@@ -15,8 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@gifty/config": ["libs/config/src/index.ts"],
+      "@gifty/gifts": ["libs/features/gifts/src/index.ts"],
+      "@gifty/infrastructure": ["libs/infrastructure/src/index.ts"],
       "@gifty/shared": ["shared/src/index.ts"],
-      "@gifty/types": ["types/src/index.ts"]
+      "@gifty/types": ["types/src/index.ts"],
+      "@gifty/wishlists": ["libs/features/wishlists/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
