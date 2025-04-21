@@ -1,7 +1,7 @@
 import {
   FirestoreDataConverter,
   QueryDocumentSnapshot, Timestamp
-} from 'firebase/firestore';
+} from 'firebase-admin/firestore';
 import { Wishlist } from '../domain/entities/wishlist.entity';
 import { WishlistFirebaseRecord } from './firestore-wishlist.record';
 

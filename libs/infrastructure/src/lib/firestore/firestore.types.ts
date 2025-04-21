@@ -1,4 +1,4 @@
-import { DocumentData, Firestore, FirestoreDataConverter } from 'firebase/firestore';
+import { DocumentData, Firestore, FirestoreDataConverter } from 'firebase-admin/firestore';
 
 export interface IFirestoreCollectionInitConfig<TAppModel, TFirestoreModel extends DocumentData> {
   db: Firestore;

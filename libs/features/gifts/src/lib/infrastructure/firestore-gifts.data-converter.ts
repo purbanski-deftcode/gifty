@@ -1,7 +1,7 @@
 import {
   FirestoreDataConverter,
   QueryDocumentSnapshot, Timestamp
-} from 'firebase/firestore';
+} from 'firebase-admin/firestore';
 import { Gift } from '../domain/entities/gift.entity';
 import {
   GiftFirebaseRecord,

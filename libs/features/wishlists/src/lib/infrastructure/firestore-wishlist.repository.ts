@@ -1,7 +1,6 @@
 import { Wishlist } from '../domain/entities/wishlist.entity';
 import { IWishlistRepository } from '../domain/repositories/wishlist.repository';
 import { Injectable } from '@nestjs/common';
-import { query, where } from 'firebase/firestore';
 import { WishlistFirebaseRecord } from './firestore-wishlist.record';
 import { FirestoreWishlistDataConverter } from './firestore-wishlist.data-converter';
 import { FirestoreCollection, FirestoreService } from '@gifty/infrastructure';
@@ -29,11 +28,11 @@ export class FirestoreWishlistRepository implements IWishlistRepository {
     return this.collection.getById(id);
   }
 
+
   public async findByOwnerId(ownerId: string): Promise<Wishlist[]> {
-    return this.collection.findByQuery((col) => query(
-      col,
-      where('ownerId', '==', ownerId)
-    ));
+    return this.collection.findByQuery((col) =>
+      col.where('ownerId', '==', ownerId)
+    );
   }
 
   public async update(wishlist: Wishlist): Promise<Wishlist> {
