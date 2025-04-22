@@ -5,8 +5,9 @@ import { FirestoreCollection } from './firestore-collection';
 import { AppConfigService } from '@gifty/config';
 import { join } from 'node:path';
 import { readFileSync } from 'node:fs';
-import { Auth, getAuth } from 'firebase-admin/auth';
+import { Auth, DecodedIdToken, getAuth } from 'firebase-admin/auth';
 
+// TODO: change name to firebase related
 @Injectable()
 export class FirestoreService {
   private db!: Firestore;
@@ -54,5 +55,9 @@ export class FirestoreService {
       collectionPath,
       converter
     });
+  }
+
+  public verifyToken(token: string): Promise<DecodedIdToken> {
+    return this.auth.verifyIdToken(token);
   }
 }

@@ -11,6 +11,25 @@ export const WISHLISTS_ROUTES: Routes = [
             (m) => m.OverviewComponent
           ),
       },
+      {
+        path: 'editor',
+        children: [
+          {
+            path: 'new',
+            loadComponent: () =>
+              import('./editor/editor.component').then(
+                (m) => m.EditorComponent
+              ),
+          },
+          {
+            path: ':id',
+            loadComponent: () =>
+              import('./editor/editor.component').then(
+                (m) => m.EditorComponent
+              ),
+          },
+        ]
+      },
     ],
   },
 ];
