@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { initializeApp, FirebaseApp } from 'firebase/app';
 import { getAuth, Auth, connectAuthEmulator, User, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink } from 'firebase/auth';
 import { environment } from '../../environments/environment';
-import { Observable, Subject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class FirebaseService {
   private readonly app: FirebaseApp;
 
   public constructor() {
-    const userSubject = new Subject<User | null>();
+    const userSubject = new ReplaySubject<User | null>(1);
     this.user$ = userSubject.asObservable();
 
     this.app = initializeApp(environment.firebase);

@@ -1,6 +1,6 @@
-import { Body, Controller, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
-import { CreateWishlistDto, WishlistService } from '@gifty/wishlists';
+import { CreateWishlistDto, UpdateWishlistDto, WishlistService } from '@gifty/wishlists';
 import { AddGiftToWishlistDto, GiftsService } from '@gifty/gifts';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -11,6 +11,7 @@ interface AuthenticatedRequest extends Request {
   };
 }
 
+@UseGuards(AuthGuard)
 @Controller('wishlists')
 export class WishlistsController {
   public constructor(
@@ -18,7 +19,14 @@ export class WishlistsController {
     private readonly giftsService: GiftsService
   ) {}
 
-  @UseGuards(AuthGuard)
+  @Get('/:wishlistId')
+  public getOne(
+    @Req() req: AuthenticatedRequest,
+    @Param('wishlistId') wishlistId: string,
+  ) {
+    return this.wishlistService.getWishlistById(req.user.uid, wishlistId);
+  }
+
   @Post()
   public async create(
     @Req() req: AuthenticatedRequest,
@@ -26,6 +34,15 @@ export class WishlistsController {
   ) {
     return this.wishlistService.createWishlist(req.user.uid, dto);
   }
+
+  @Patch('/:wishlistId')
+  public async update(
+    @Param('wishlistId') wishlistId: string,
+    @Body() dto: UpdateWishlistDto
+  ) {
+    return this.wishlistService.updateWishlist(wishlistId, dto);
+  }
+
 
   @Post('/:wishlistId/gifts')
   public async addGiftToWishlist(

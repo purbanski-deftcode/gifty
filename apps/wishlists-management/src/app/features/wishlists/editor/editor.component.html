@@ -4,15 +4,19 @@
     <button mat-flat-button [disabled]="form.invalid" (click)="saveWishlist()">Zapisz</button>
   </div>
 
-  <div>
-    <form [formGroup]="form">
-      <mat-form-field class="editor__field">
-        <input matInput placeholder="Nazwa listy życzeń" formControlName="name">
-      </mat-form-field>
-    </form>
+  @if (isLoading()) {
+    <div class="loading-indicator">
+      <mat-spinner [diameter]="50"></mat-spinner>
+    </div>
+  } @else {
+    <div>
+      <form [formGroup]="form">
+        <mat-form-field class="editor__field">
+          <input matInput placeholder="Nazwa listy życzeń" formControlName="name">
+        </mat-form-field>
+      </form>
 
-    @if(!isEditingExistingWishlist()) {
       <app-empty-gifts-info class="empty-gifts-info" width="70%" [text]="noGiftsText()"></app-empty-gifts-info>
-    }
-  </div>
+    </div>
+  }
 </app-container>

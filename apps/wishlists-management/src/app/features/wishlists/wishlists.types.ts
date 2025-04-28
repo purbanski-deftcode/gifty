@@ -4,3 +4,7 @@ export interface IWishlistResponse {
   id: string;
   createdAt: string;
 }
+
+export interface IWishlist extends Readonly<Omit<IWishlistResponse, 'createdAt'>> {
+  readonly createdAt: Date;
+}

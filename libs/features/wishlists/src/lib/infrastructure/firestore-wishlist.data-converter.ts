@@ -18,9 +18,9 @@ export class FirestoreWishlistDataConverter implements FirestoreDataConverter<Wi
     const data = snapshot.data();
 
     return new Wishlist(
-      snapshot.id,
       data.name,
       data.ownerId,
+      snapshot.id,
       data.createdAt.toDate(),
     );
   }
