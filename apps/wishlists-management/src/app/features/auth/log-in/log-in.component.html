@@ -1,1 +1,43 @@
-<button mat-flat-button (click)="logIn()">Log in</button>
+<div class="login-container">
+  @if (!loginSuccess()) {
+    <div class="header-container">
+      <img class="image" ngSrc="/images/wrapped-gift.svg" alt="wishlist" width="671" height="516" [priority]="true">
+      <h2 class="title">Od Twoich życzeń dzieli Ciebie jeden krok</h2>
+    </div>
+  }
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p class="loading-text">Wysyłanie linku logowania...</p>
+    </div>
+  } @else {
+    @if (loginSuccess()) {
+      <div class="success-container">
+        <mat-icon class="success-icon">check_circle</mat-icon>
+        <h3 class="success-title">Link do logowania został wysłany!</h3>
+        <p class="success-text">Sprawdź swoją skrzynkę email i kliknij w link, aby się zalogować.</p>
+        <p class="success-text">Email: {{ emailField.value }}</p>
+      </div>
+    } @else {
+      <div class="form-container">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+
+          <input matInput type="email" [formControl]="emailField" placeholder="Podaj swój adres email">
+
+          <mat-error *ngIf="emailField.errors?.['required'] && emailField.touched">
+            Email jest wymagany
+          </mat-error>
+          <mat-error *ngIf="emailField.errors?.['email'] && emailField.touched">
+            Niepoprawny format adresu email
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" (click)="logIn()" [disabled]="emailField.invalid">Zaloguj się</button>
+
+        <p class="info-text">Na podany adres email zostanie wysłany link umożliwiający zalogowanie się do aplikacji.</p>
+      </div>
+    }
+  }
+</div>

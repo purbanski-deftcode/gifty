@@ -1,1 +1,6 @@
-<p>log-in-callback works!</p>
+<div class="callback-container">
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p class="loading-text">Trwa logowanie...</p>
+  </div>
+</div>

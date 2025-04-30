@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 import { Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FirebaseService {
   public user$: Observable<User | null>;
@@ -24,32 +24,23 @@ export class FirebaseService {
       connectAuthEmulator(this.auth, 'http://localhost:9099');
     }
 
-    this.auth.onAuthStateChanged(user => {
+    this.auth.onAuthStateChanged((user) => {
       userSubject.next(user);
     });
   }
 
-  public logInWithEmail() {
+  public async logInWithEmail(email: string) {
     const actionCodeSettings = {
       url: 'http://localhost:4200/auth/log-in-callback',
       handleCodeInApp: true,
     };
 
-    const email = 'p.urbanski.90@gmail.com';
+    await sendSignInLinkToEmail(this.auth, email, actionCodeSettings);
 
-    sendSignInLinkToEmail(this.auth, email, actionCodeSettings)
-      .then(() => {
-        window.localStorage.setItem('emailForSignIn', email);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-
-        console.log(errorCode, errorMessage);
-      });
+    window.localStorage.setItem('emailForSignIn', email);
   }
 
-  public handleLogInWithEmail() {
+  public async handleLogInWithEmail() {
     if (isSignInWithEmailLink(this.auth, window.location.href)) {
       let email = window.localStorage.getItem('emailForSignIn');
 
@@ -63,14 +54,11 @@ export class FirebaseService {
         throw new Error('Email address is required for sign-in.');
       }
 
-      signInWithEmailLink(this.auth, email, window.location.href)
-        .then((credentials) => {
-          window.localStorage.removeItem('emailForSignIn');
-          console.log(credentials.user);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      await signInWithEmailLink(this.auth, email, window.location.href);
+
+      window.localStorage.removeItem('emailForSignIn');
+    } else {
+      throw new Error('Invalid sign-in link.');
     }
   }
 }

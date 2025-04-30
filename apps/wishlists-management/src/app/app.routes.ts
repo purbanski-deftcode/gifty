@@ -5,4 +5,9 @@ import { AUTH_ROUTES } from './features/auth/auth.routes';
 export const appRoutes: Route[] = [
   ...AUTH_ROUTES,
   ...WISHLISTS_ROUTES,
+  {
+    path: '',
+    redirectTo: 'wishlists/overview',
+    pathMatch: 'full',
+  },
 ];
