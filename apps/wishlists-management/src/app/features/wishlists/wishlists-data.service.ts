@@ -14,17 +14,32 @@ export class WishlistsDataService {
     return this.http.post<IWishlistResponse>('/api/wishlists', payload);
   }
 
-
   public updateWishlist(wishlistId: string, payload: UpdateWishlistDto) {
-    return this.http.patch<IWishlistResponse>(`/api/wishlists/${wishlistId}`, payload);
+    return this.http.patch<IWishlistResponse>(
+      `/api/wishlists/${wishlistId}`,
+      payload
+    );
+  }
+
+  public getWishlists(): Observable<IWishlist[]> {
+    return this.http.get<IWishlistResponse[]>('/api/wishlists').pipe(
+      map((wishlists) =>
+        wishlists.map((wishlist) => ({
+          ...wishlist,
+          createdAt: new Date(wishlist.createdAt),
+        }))
+      )
+    );
   }
 
   public getWishlistById(wishlistId: string): Observable<IWishlist> {
-    return this.http.get<IWishlistResponse>(`/api/wishlists/${wishlistId}`).pipe(
-      map(wishlist => ({
-        ...wishlist,
-        createdAt: new Date(wishlist.createdAt),
-      }))
-    );
+    return this.http
+      .get<IWishlistResponse>(`/api/wishlists/${wishlistId}`)
+      .pipe(
+        map((wishlist) => ({
+          ...wishlist,
+          createdAt: new Date(wishlist.createdAt),
+        }))
+      );
   }
 }

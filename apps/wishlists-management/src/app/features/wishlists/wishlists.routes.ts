@@ -9,8 +9,8 @@ export const WISHLISTS_ROUTES: Routes = [
       {
         path: 'overview',
         loadComponent: () =>
-          import('./overview/overview.component').then(
-            (m) => m.OverviewComponent
+          import('./overview/wishlists-overview.component').then(
+            (m) => m.WishlistsOverviewComponent
           ),
       },
       {

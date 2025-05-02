@@ -1,0 +1,16 @@
+<mat-card appearance="outlined" class="wishlist-card">
+  <mat-card-header>
+    <mat-card-title>{{ wishlist().name }}</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>
+      Utworzono: {{ wishlist().createdAt | date:'dd.MM.yyyy' }}
+    </p>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-button>Edytuj</button>
+    <button mat-button>Usuń</button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,17 @@
+<app-container>
+  <h1 class="heading">Twoje listy życzeń</h1>
+
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner [diameter]="50"></mat-spinner>
+    </div>
+  } @else {
+    <div class="wishlists-container">
+      @for (wishlist of wishlists(); track wishlist.id) {
+        <app-wishlists-overview-item [wishlist]="wishlist"></app-wishlists-overview-item>
+      }
+
+      <app-wishlists-overview-new-item-btn></app-wishlists-overview-new-item-btn>
+    </div>
+  }
+</app-container>

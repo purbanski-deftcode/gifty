@@ -19,10 +19,15 @@ export class WishlistsController {
     private readonly giftsService: GiftsService
   ) {}
 
+  @Get()
+  public getWishlists(@Req() req: AuthenticatedRequest) {
+    return this.wishlistService.getWishlists(req.user.uid);
+  }
+
   @Get('/:wishlistId')
   public getOne(
     @Req() req: AuthenticatedRequest,
-    @Param('wishlistId') wishlistId: string,
+    @Param('wishlistId') wishlistId: string
   ) {
     return this.wishlistService.getWishlistById(req.user.uid, wishlistId);
   }
@@ -42,7 +47,6 @@ export class WishlistsController {
   ) {
     return this.wishlistService.updateWishlist(wishlistId, dto);
   }
-
 
   @Post('/:wishlistId/gifts')
   public async addGiftToWishlist(

@@ -14,10 +14,13 @@ import { CreateWishlistDto, UpdateWishlistDto } from './dto';
 @Injectable()
 export class WishlistService {
   public constructor(
-    @Inject(WISHLIST_REPOSITORY) public repository: IWishlistRepository,
+    @Inject(WISHLIST_REPOSITORY) public repository: IWishlistRepository
   ) {}
 
-  public async getWishlistById(userId: string, wishlistId: string): Promise<Wishlist> {
+  public async getWishlistById(
+    userId: string,
+    wishlistId: string
+  ): Promise<Wishlist> {
     const targetWishlist = await this.repository.findById(wishlistId);
 
     if (targetWishlist === null) {
@@ -31,16 +34,23 @@ export class WishlistService {
     return targetWishlist;
   }
 
-  public async createWishlist(userId: string, dto: CreateWishlistDto): Promise<Wishlist> {
-    const wishlist = new Wishlist(
-      dto.name,
-      userId,
-    );
+  public async getWishlists(userId: string): Promise<Wishlist[]> {
+    return this.repository.findByOwnerId(userId);
+  }
+
+  public async createWishlist(
+    userId: string,
+    dto: CreateWishlistDto
+  ): Promise<Wishlist> {
+    const wishlist = new Wishlist(dto.name, userId);
 
     return this.repository.create(wishlist);
   }
 
-  public async updateWishlist(wishlistId: string, dto: UpdateWishlistDto): Promise<Wishlist> {
+  public async updateWishlist(
+    wishlistId: string,
+    dto: UpdateWishlistDto
+  ): Promise<Wishlist> {
     const targetWishlist = await this.repository.findById(wishlistId);
 
     if (targetWishlist === null) {
@@ -51,7 +61,7 @@ export class WishlistService {
       dto.name,
       targetWishlist.ownerId,
       targetWishlist.id,
-      targetWishlist.createdAt,
+      targetWishlist.createdAt
     );
 
     return this.repository.update(wishlist);
