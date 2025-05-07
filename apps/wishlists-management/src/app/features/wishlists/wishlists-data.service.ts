@@ -32,6 +32,10 @@ export class WishlistsDataService {
     );
   }
 
+  public deleteWishlist(wishlistId: string): Observable<void> {
+    return this.http.delete<void>(`/api/wishlists/${wishlistId}`);
+  }
+
   public getWishlistById(wishlistId: string): Observable<IWishlist> {
     return this.http
       .get<IWishlistResponse>(`/api/wishlists/${wishlistId}`)

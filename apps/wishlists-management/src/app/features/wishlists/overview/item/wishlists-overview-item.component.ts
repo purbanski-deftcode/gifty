@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IWishlist } from '../../wishlists.types';
 import { MatButton } from '@angular/material/button';
@@ -20,4 +20,6 @@ import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle } 
 })
 export class WishlistsOverviewItemComponent {
   public readonly wishlist = input.required<IWishlist>();
+  public readonly editWishlist = output<void>();
+  public readonly deleteWishlist = output<void>();
 }

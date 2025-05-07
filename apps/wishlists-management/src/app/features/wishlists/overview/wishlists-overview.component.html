@@ -8,10 +8,10 @@
   } @else {
     <div class="wishlists-container">
       @for (wishlist of wishlists(); track wishlist.id) {
-        <app-wishlists-overview-item [wishlist]="wishlist"></app-wishlists-overview-item>
+        <app-wishlists-overview-item (editWishlist)="onWishlistEdit(wishlist.id)" (deleteWishlist)="onWishlistDelete(wishlist)" [wishlist]="wishlist"></app-wishlists-overview-item>
       }
 
-      <app-wishlists-overview-new-item-btn></app-wishlists-overview-new-item-btn>
+      <app-wishlists-overview-new-item-btn (click)="createNewWishlist()"></app-wishlists-overview-new-item-btn>
     </div>
   }
 </app-container>

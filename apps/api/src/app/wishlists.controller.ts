@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { Request } from 'express';
 import { CreateWishlistDto, UpdateWishlistDto, WishlistService } from '@gifty/wishlists';
 import { AddGiftToWishlistDto, GiftsService } from '@gifty/gifts';
@@ -54,5 +64,13 @@ export class WishlistsController {
     @Body() dto: AddGiftToWishlistDto
   ) {
     return this.giftsService.addGiftToWishlist(wishlistId, dto);
+  }
+
+  @Delete('/:wishlistId')
+  public async delete(
+    @Req() req: AuthenticatedRequest,
+    @Param('wishlistId') wishlistId: string
+  ) {
+    return this.wishlistService.deleteWishlist(req.user.uid, wishlistId);
   }
 }

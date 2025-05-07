@@ -34,6 +34,23 @@ export class WishlistService {
     return targetWishlist;
   }
 
+  public async deleteWishlist(
+    userId: string,
+    wishlistId: string
+  ): Promise<void> {
+    const targetWishlist = await this.repository.findById(wishlistId);
+
+    if (targetWishlist === null) {
+      throw new NotFoundException('Wishlist not found');
+    }
+
+    if (targetWishlist.ownerId !== userId) {
+      throw new ForbiddenException('Access denied');
+    }
+
+    await this.repository.delete(wishlistId);
+  }
+
   public async getWishlists(userId: string): Promise<Wishlist[]> {
     return this.repository.findByOwnerId(userId);
   }
